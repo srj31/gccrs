@@ -34,11 +34,25 @@ public:
       rmap.insert ({kv.second, kv.first});
   }
 
-  const v_iter lookup (const K &key) const { return map.find (key); }
-  const k_iter lookup (const V &key) const { return rmap.find (key); }
+  const tl::optional<const V&> 
+  lookup (const K &key) const 
+  { 
+    auto itr = map.find(key); 
+    if (itr == map.end ())
+      return tl::nullopt;
 
-  bool is_iter_ok (const v_iter &iter) const { return iter != map.end (); }
-  bool is_iter_ok (const k_iter &iter) const { return iter != rmap.end (); }
+    return itr->second;
+  }
+
+  const tl::optional<const K&> 
+  lookup (const V &key) const 
+  { 
+    auto itr = rmap.find(key); 
+    if (itr == rmap.end ())
+      return tl::nullopt;
+    
+    return itr->second;
+  }
 
 private:
   std::unordered_map<K, V> map;
