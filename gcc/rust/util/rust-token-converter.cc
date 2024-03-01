@@ -296,8 +296,7 @@ from_literal (const ProcMacro::Literal &literal,
 {
   auto lookup = suffixes.lookup (literal.suffix.to_string ());
   auto loc = convert (literal.span);
-  auto suffix
-    = lookup.value_or (CORETYPE_UNKNOWN);
+  auto suffix = lookup.value_or (CORETYPE_UNKNOWN);
   // FIXME: Add spans instead of empty locations
   switch (literal.kind.tag)
     {

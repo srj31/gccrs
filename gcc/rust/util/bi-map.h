@@ -34,23 +34,21 @@ public:
       rmap.insert ({kv.second, kv.first});
   }
 
-  const tl::optional<const V&> 
-  lookup (const K &key) const 
-  { 
-    auto itr = map.find(key); 
+  const tl::optional<const V &> lookup (const K &key) const
+  {
+    auto itr = map.find (key);
     if (itr == map.end ())
       return tl::nullopt;
 
     return itr->second;
   }
 
-  const tl::optional<const K&> 
-  lookup (const V &key) const 
-  { 
-    auto itr = rmap.find(key); 
+  const tl::optional<const K &> lookup (const V &key) const
+  {
+    auto itr = rmap.find (key);
     if (itr == rmap.end ())
       return tl::nullopt;
-    
+
     return itr->second;
   }
 
