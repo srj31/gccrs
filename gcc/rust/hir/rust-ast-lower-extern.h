@@ -22,6 +22,7 @@
 #include "rust-ast-lower-base.h"
 #include "rust-ast-lower-type.h"
 #include "rust-ast-lower.h"
+#include "rust-hir-full-decls.h"
 
 namespace Rust {
 namespace HIR {
@@ -112,6 +113,17 @@ public:
       std::unique_ptr<HIR::Type> (return_type), std::move (where_clause),
       std::move (function_params), is_variadic, std::move (vis),
       function.get_outer_attrs (), function.get_locus ());
+  }
+
+  void visit (AST::ExternalTypeItem &type) override
+  {
+    auto crate_num = mappings->get_current_crate ();
+    Analysis::NodeMapping mapping (crate_num, type.get_node_id (),
+				   mappings->get_next_hir_id (crate_num),
+				   mappings->get_next_localdef_id (crate_num));
+
+    translated = new HIR::ExternalTypeItem (mapping, type.get_identifier (),
+					    type.get_locus ());
   }
 
 private:
